@@ -9,30 +9,32 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.container}>
         <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ExpoLiveUpdatesActivities.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ExpoLiveUpdatesActivities.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoLiveUpdatesActivities.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
-        <Group name="Views">
-          <ExpoLiveUpdatesActivitiesView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
-        </Group>
+       <View style={styles.container}>
+      <Text
+        onPress={() => {
+          ExpoLiveUpdatesActivities.startActivity("Hello", "🚀");
+        }}
+      >
+        Start Activity
+      </Text>
+      <Text
+        onPress={() => {
+          const emojis = ["🚀", "🥓", "🔥", "⚡️"];
+          ExpoLiveUpdatesActivities.updateActivity(
+            emojis[Math.floor(Math.random() * emojis.length)]
+          );
+        }}
+      >
+        Update Activity
+      </Text>
+      <Text
+        onPress={() => {
+          ExpoLiveUpdatesActivities.endActivity();
+        }}
+      >
+        End Activity
+      </Text>
+    </View>
       </ScrollView>
     </SafeAreaView>
   );

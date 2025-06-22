@@ -1,48 +1,90 @@
 import ExpoModulesCore
+import ActivityKit
 
-public class ExpoLiveUpdatesActivitiesModule: Module {
-  // Each module class must implement the definition function. The definition consists of components
-  // that describes the module's functionality and behavior.
-  // See https://docs.expo.dev/modules/module-api for more details about available components.
-  public func definition() -> ModuleDefinition {
-    // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
-    // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
-    // The module will be accessible from `requireNativeModule('ExpoLiveUpdatesActivities')` in JavaScript.
-    Name("ExpoLiveUpdatesActivities")
-
-    // Sets constant properties on the module. Can take a dictionary or a closure that returns a dictionary.
-    Constants([
-      "PI": Double.pi
-    ])
-
-    // Defines event names that the module can send to JavaScript.
-    Events("onChange")
-
-    // Defines a JavaScript synchronous function that runs the native code on the JavaScript thread.
-    Function("hello") {
-      return "Hello world! 👋"
+// MUST exactly match the WidgetAttributes struct in WidgetLiveActivity.
+struct WidgetAttributes: ActivityAttributes {
+    public struct ContentState: Codable, Hashable {
+        // Dynamic stateful properties about your activity go here!
+        var emoji: String
     }
+    
+    // Fixed non-changing properties about your activity go here!
+    var name: String
+}
 
-    // Defines a JavaScript function that always returns a Promise and whose native code
-    // is by default dispatched on the different thread than the JavaScript runtime runs on.
-    AsyncFunction("setValueAsync") { (value: String) in
-      // Send an event to JavaScript.
-      self.sendEvent("onChange", [
-        "value": value
-      ])
-    }
-
-    // Enables the module to be used as a native view. Definition components that are accepted as part of the
-    // view definition: Prop, Events.
-    View(ExpoLiveUpdatesActivitiesView.self) {
-      // Defines a setter for the `url` prop.
-      Prop("url") { (view: ExpoLiveUpdatesActivitiesView, url: URL) in
-        if view.webView.url != url {
-          view.webView.load(URLRequest(url: url))
+public class ExpoLiveActivityModule: Module {
+    // Each module class must implement the definition function. The definition consists of components
+    // that describes the module's functionality and behavior.
+    // See https://docs.expo.dev/modules/module-api for more details about available components.
+    public func definition() -> ModuleDefinition {
+        // Sets the name of the module that JavaScript code will use to refer to the module. Takes a string as an argument.
+        // Can be inferred from module's class name, but it's recommended to set it explicitly for clarity.
+        // The module will be accessible from `requireNativeModule('ExpoLiveActivity')` in JavaScript.
+        Name("ExpoLiveActivity")
+        
+        Events("onLiveActivityCancel")
+        
+        Function("areActivitiesEnabled") { () -> Bool in
+            if #available(iOS 16.2, *) {
+                return ActivityAuthorizationInfo().areActivitiesEnabled
+            } else {
+                return false
+            }
         }
-      }
-
-      Events("onLoad")
+        
+        Function("isActivityInProgress") { () -> Bool in
+            if #available(iOS 16.2, *) {
+                return !Activity<WidgetAttributes>.activities.isEmpty
+            } else {
+                return false
+            }
+        }
+        
+        Function("startActivity") { (name: String, emoji: String) -> Bool in
+            if #available(iOS 16.2, *) {
+                let attributes = WidgetAttributes(name: name)
+                let contentState = WidgetAttributes.ContentState(emoji: emoji)
+                let activityContent = ActivityContent(state: contentState, staleDate: nil)
+                do {
+                    let activity = try Activity.request(attributes: attributes, content: activityContent)
+                    NotificationCenter.default.addObserver(self, selector: #selector(self.onLiveActivityCancel), name: Notification.Name("onLiveActivityCancel"), object: nil)
+                    return true
+                } catch (let error) {
+                    
+                    return false
+                }
+            } else {
+                return false
+            }
+        }
+        
+        Function("updateActivity") { (emoji: String) -> Void in
+            if #available(iOS 16.2, *) {
+                let contentState = WidgetAttributes.ContentState(emoji: emoji)
+                
+                Task {
+                    for activity in Activity<WidgetAttributes>.activities {
+                        await activity.update(using: contentState)
+                    }
+                }
+            }
+        }
+        
+        Function("endActivity") { () -> Void in
+            if #available(iOS 16.2, *) {
+                Task {
+                    for activity in Activity<WidgetAttributes>.activities {
+                        await activity.end(nil, dismissalPolicy: .default)
+                    }
+                }
+                
+                NotificationCenter.default.removeObserver(self, name: Notification.Name("onLiveActivityCancel"), object: nil)
+            }
+        }
     }
-  }
+    
+    @objc
+    func onLiveActivityCancel() {
+        sendEvent("onLiveActivityCancel", [:])
+    }
 }
