@@ -14,7 +14,13 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo.modules.liveupdates.example"
+      "bundleIdentifier": "expo.modules.liveupdates.example",
+      "entitlements": {
+      "com.apple.security.application-groups": ["group.com.jayesh.liveactivities"]
+      },
+      "infoPlist": {
+        "NSSupportsLiveActivities": true
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -26,6 +32,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+    "@bacons/apple-targets"
+    ]
   }
 }

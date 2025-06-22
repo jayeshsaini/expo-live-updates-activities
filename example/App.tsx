@@ -1,6 +1,6 @@
 import { useEvent } from 'expo';
-import ExpoLiveUpdatesActivities, { ExpoLiveUpdatesActivitiesView } from 'expo-live-updates-activities';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import ExpoLiveUpdatesActivities from 'expo-live-updates-activities';
+import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 
 export default function App() {
   const onChangePayload = useEvent(ExpoLiveUpdatesActivities, 'onChange');

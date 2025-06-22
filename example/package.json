@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "ios:clean": "expo prebuild -p ios --clean && expo run:ios",
+    "nprebuild": "expo prebuild --template ./node_module/@bacons/apple-targets/prebuild-blank.tgz -p ios"
   },
   "dependencies": {
     "expo": "~53.0.12",
