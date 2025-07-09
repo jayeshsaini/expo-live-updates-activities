@@ -5,7 +5,8 @@ export type OnLoadEventPayload = {
 };
 
 export type ExpoLiveUpdatesActivitiesModuleEvents = {
-  onChange: (params: ChangeEventPayload) => void;
+  // onChange: (params: ChangeEventPayload) => void;
+  onLiveActivityCancel: () => void;
 };
 
 export type ChangeEventPayload = {

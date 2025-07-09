@@ -13,7 +13,9 @@
     "prepublishOnly": "expo-module prepublishOnly",
     "expo-module": "expo-module",
     "open:ios": "xed example/ios",
-    "open:android": "open -a \"Android Studio\" example/android"
+    "open:android": "open -a \"Android Studio\" example/android",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "keywords": [
     "react-native",
@@ -28,7 +30,11 @@
   "author": "Jayesh Saini <jayesh.saini.95@gmail.com> (https://github.com/jayeshsaini)",
   "license": "MIT",
   "homepage": "https://github.com/jayeshsaini/expo-live-updates-activities#readme",
-  "dependencies": {},
+  "dependencies": {
+    "expo": "~53.0.12",
+    "react": "19.0.0",
+    "react-native": "0.79.4"
+  },
   "devDependencies": {
     "@types/react": "~19.0.0",
     "expo-module-scripts": "^4.1.6",
