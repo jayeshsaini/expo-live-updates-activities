@@ -8,12 +8,15 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "ios:clean": "expo prebuild -p ios --clean && expo run:ios",
-    "nprebuild": "expo prebuild --template ./node_module/@bacons/apple-targets/prebuild-blank.tgz -p ios"
+    "nprebuild": "expo prebuild --template ./node_module/@bacons/apple-targets/prebuild-blank.tgz -p ios",
+    "android:clean": "expo prebuild -p android --clean && expo run:android"
   },
   "dependencies": {
     "expo": "~53.0.12",
+    "expo-build-properties": "~0.14.8",
     "react": "19.0.0",
-    "react-native": "0.79.4"
+    "react-native": "0.79.4",
+    "react-native-safe-area-context": "5.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
