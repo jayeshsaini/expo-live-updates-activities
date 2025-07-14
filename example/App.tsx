@@ -4,8 +4,6 @@ import { ScrollView, Text, View, Platform, Button, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function App() {
-  // const onChangePayload = useEvent(ExpoLiveUpdatesActivities, 'onChange');
-
   if (Platform.OS === "ios") {
     return (
       <SafeAreaView style={styles.container}>

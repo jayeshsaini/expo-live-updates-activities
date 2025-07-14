@@ -1,6 +1,9 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { NativeModule, requireNativeModule } from "expo";
 
-import { ExpoLiveUpdatesActivitiesModuleEvents } from './ExpoLiveUpdatesActivities.types';
+import {
+  ExpoLiveUpdatesActivitiesModuleEvents,
+  ProgressConfig,
+} from "./ExpoLiveUpdatesActivities.types";
 
 declare class ExpoLiveUpdatesActivitiesModule extends NativeModule<ExpoLiveUpdatesActivitiesModuleEvents> {
   // iOS methods
@@ -11,11 +14,17 @@ declare class ExpoLiveUpdatesActivitiesModule extends NativeModule<ExpoLiveUpdat
   endActivity(): void;
 
   // Android methods
+  showStandardLiveUpdate(): void;
+  showBigTextLiveUpdate(): void;
+  showCallLiveUpdate(): void;
+  showProgressLiveUpdate(config: ProgressConfig): void;
   showLiveUpdate(progress: number, title: string, text: string): void;
   completeLiveUpdate(title: string, text: string): void;
   cancelLiveUpdate(): void;
-  hello(): string;
+  getDrawableId(resourceName: string): number | null;
 }
 
 // This call loads the native module object from the JSI.
-export default requireNativeModule<ExpoLiveUpdatesActivitiesModule>('ExpoLiveUpdatesActivities');
+export default requireNativeModule<ExpoLiveUpdatesActivitiesModule>(
+  "ExpoLiveUpdatesActivities"
+);
