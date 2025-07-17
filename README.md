@@ -1,5 +1,7 @@
 # Expo Live Updates & Activities
 
+[Demo Video](https://github.com/jayeshsaini/expo-live-updates-activities/blob/main/demo/Expo%20Live%20Update%20%26%20Activities%20Demo.mov)
+
 This module provides a unified API for using **Live Activities** on iOS and **Live Updates** on Android.
 
 - **iOS:** Control Live Activities from your JavaScript code. The UI is built natively with SwiftUI.
@@ -131,7 +133,3 @@ Displays a notification with a progress bar.
 Cancels the ongoing live update.
 
 Please refer to the `example/App.tsx` file for detailed usage of the Android API.
-
-## Contributing
-
-Contributions are very welcome! Please refer to the guidelines described in the [contributing guide](https://github.com/expo/expo#contributing).
