@@ -6,36 +6,49 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function App() {
   if (Platform.OS === "ios") {
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView style={styles.container}>
-          <Text style={styles.header}>Module API Example</Text>
-          <View style={styles.container}>
-            <Text
-              onPress={() => {
-                ExpoLiveUpdatesActivities.startActivity("Hello", "🚀");
-              }}
-            >
-              Start Activity
-            </Text>
-            <Text
-              onPress={() => {
-                const emojis = ["🚀", "🥓", "🔥", "⚡️"];
-                ExpoLiveUpdatesActivities.updateActivity(
-                  emojis[Math.floor(Math.random() * emojis.length)]
-                );
-              }}
-            >
-              Update Activity
-            </Text>
-            <Text
-              onPress={() => {
-                ExpoLiveUpdatesActivities.endActivity();
-              }}
-            >
-              End Activity
-            </Text>
-          </View>
-        </ScrollView>
+      <SafeAreaView style={styles.safeArea}>
+        <Text style={styles.header}>Module API Example</Text>
+        <View style={styles.container}>
+          <Button
+            title="Start Activity"
+            onPress={() => {
+              ExpoLiveUpdatesActivities.startActivity(
+                JSON.stringify({
+                  title: "Hello",
+                  subtitle: "World",
+                  description: "This is a test",
+                })
+              );
+            }}
+          />
+          <Button
+            title="Update Activity"
+            onPress={() => {
+              const subtitles = ["Subtitle 1", "Subtitle 2", "Subtitle 3"];
+              ExpoLiveUpdatesActivities.updateActivity(
+                JSON.stringify({
+                  title: "Hello",
+                  subtitle:
+                    subtitles[Math.floor(Math.random() * subtitles.length)],
+                  description: "This is an updated test",
+                })
+              );
+            }}
+          />
+          <Button
+            title="End Activity"
+            onPress={() => {
+              ExpoLiveUpdatesActivities.endActivity(
+                JSON.stringify({
+                  title: "Hello",
+                  subtitle: "Ending Activity",
+                  description: "This is the final update",
+                }),
+                "after"
+              );
+            }}
+          />
+        </View>
       </SafeAreaView>
     );
   } else {
@@ -187,6 +200,10 @@ function Group(props: { name: string; children: React.ReactNode }) {
 }
 
 const styles = {
+  safeArea: {
+    flex: 1,
+    marginTop: 40,
+  },
   header: {
     fontSize: 30,
     margin: 20,
@@ -203,7 +220,6 @@ const styles = {
   },
   container: {
     flex: 1,
-    backgroundColor: "#eee",
     marginHorizontal: 10,
   },
   view: {

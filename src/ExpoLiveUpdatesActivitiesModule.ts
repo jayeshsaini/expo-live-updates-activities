@@ -1,22 +1,28 @@
 import { NativeModule, requireNativeModule } from "expo";
 
 import {
+  BigTextConfig,
+  CallConfig,
   ExpoLiveUpdatesActivitiesModuleEvents,
   ProgressConfig,
+  StandardConfig,
 } from "./ExpoLiveUpdatesActivities.types";
 
 declare class ExpoLiveUpdatesActivitiesModule extends NativeModule<ExpoLiveUpdatesActivitiesModuleEvents> {
   // iOS methods
   areActivitiesEnabled(): boolean;
   isActivityInProgress(): boolean;
-  startActivity(name: string, emoji: string): Promise<boolean>;
-  updateActivity(emoji: string): void;
-  endActivity(): void;
+  startActivity(data: string): boolean;
+  updateActivity(data: string): void;
+  endActivity(
+    data: string,
+    dismissalPolicy: "immediate" | "after" | "default"
+  ): void;
 
   // Android methods
-  showStandardLiveUpdate(): void;
-  showBigTextLiveUpdate(): void;
-  showCallLiveUpdate(): void;
+  showStandardLiveUpdate(config: StandardConfig): void;
+  showBigTextLiveUpdate(config: BigTextConfig): void;
+  showCallLiveUpdate(config: CallConfig): void;
   showProgressLiveUpdate(config: ProgressConfig): void;
   showLiveUpdate(progress: number, title: string, text: string): void;
   completeLiveUpdate(title: string, text: string): void;

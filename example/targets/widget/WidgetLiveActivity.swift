@@ -5,11 +5,11 @@ import SwiftUI
 struct WidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
-        var emoji: String
+        var data: WidgetData
     }
 
     // Fixed non-changing properties about your activity go here!
-    var name: String
+    var data: WidgetData
 }
 
 struct WidgetLiveActivity: Widget {
@@ -17,7 +17,8 @@ struct WidgetLiveActivity: Widget {
         ActivityConfiguration(for: WidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
-                Text("Hello \(context.state.emoji)")
+                Text(context.attributes.data.title)
+                Text(context.state.data.subtitle)
             }
             .activityBackgroundTint(Color.cyan)
             .activitySystemActionForegroundColor(Color.black)
@@ -27,21 +28,21 @@ struct WidgetLiveActivity: Widget {
                 // Expanded UI goes here.  Compose the expanded UI through
                 // various regions, like leading/trailing/center/bottom
                 DynamicIslandExpandedRegion(.leading) {
-                    Text("Leading")
+                    Text(context.attributes.data.title)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text("Trailing")
+                    Text(context.state.data.subtitle)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    Text("Bottom \(context.state.emoji)")
+                    Text(context.state.data.description)
                     // more content
                 }
             } compactLeading: {
-                Text("L")
+                Text(context.attributes.data.title)
             } compactTrailing: {
-                Text("T \(context.state.emoji)")
+                Text(context.state.data.subtitle)
             } minimal: {
-                Text(context.state.emoji)
+                Text(context.state.data.subtitle)
             }
             .widgetURL(URL(string: "https://www.expo.dev"))
             .keylineTint(Color.red)
@@ -51,17 +52,17 @@ struct WidgetLiveActivity: Widget {
 
 extension WidgetAttributes {
     fileprivate static var preview: WidgetAttributes {
-        WidgetAttributes(name: "World")
+        WidgetAttributes(data: WidgetData(title: "Title", subtitle: "Subtitle", description: "Description"))
     }
 }
 
 extension WidgetAttributes.ContentState {
     fileprivate static var smiley: WidgetAttributes.ContentState {
-        WidgetAttributes.ContentState(emoji: "😀")
+        WidgetAttributes.ContentState(data: WidgetData(title: "Title", subtitle: "Subtitle", description: "Description"))
      }
      
      fileprivate static var starEyes: WidgetAttributes.ContentState {
-         WidgetAttributes.ContentState(emoji: "🤩")
+         WidgetAttributes.ContentState(data: WidgetData(title: "Title", subtitle: "Subtitle", description: "Description"))
      }
 }
 

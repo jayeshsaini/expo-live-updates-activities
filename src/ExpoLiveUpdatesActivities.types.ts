@@ -29,11 +29,33 @@ export interface PointConfig {
   color: number;
 }
 
+export interface StandardConfig {
+  title?: string;
+  text?: string;
+  smallIcon?: string;
+}
+
+export interface BigTextConfig {
+  title?: string;
+  text?: string;
+  bigText?: string;
+  smallIcon?: string;
+}
+
+export interface CallConfig {
+  title?: string;
+  text?: string;
+  callerName?: string;
+  smallIcon?: string;
+  callerIcon?: string;
+  isVideo?: boolean;
+}
+
 export interface ProgressConfig {
   progress?: number;
   title?: string;
   text?: string;
-  smallIcon?: number;
+  smallIcon?: string;
   trackerIcon?: any;
   startIcon?: any;
   endIcon?: any;
