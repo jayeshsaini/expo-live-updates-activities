@@ -4,11 +4,11 @@
 
 ### iOS Live Activity
 
-<video src="https://github.com/jayeshsaini/expo-live-updates-activities/blob/main/demo/iOS%20Live%20Activity.mov" controls="controls" style="max-width: 300px;"></video>
+![iOS Demo](https://github.com/jayeshsaini/expo-live-updates-activities/blob/main/demo/iOS%20Live%20Activity.gif?raw=true)
 
 ### Android Live Updates
 
-<video src="https://github.com/jayeshsaini/expo-live-updates-activities/blob/main/demo/Android%20Live%20Updates.mov" controls="controls" style="max-width: 300px;"></video>
+![Android Demo](https://github.com/jayeshsaini/expo-live-updates-activities/blob/main/demo/Android%20Live%20Updates.gif?raw=true)
 
 This module provides a unified API for using **Live Activities** on iOS and **Live Updates** on Android.
 
