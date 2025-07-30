@@ -31,10 +31,10 @@ Live Activities on iOS require a native Widget Extension. The easiest way to cre
 
 ### 1. Add the Widget Extension
 
-First, install the `expo-apple-targets` plugin:
+First, install the `Apple Targets plugin` plugin:
 
 ```bash
-npx expo install expo-apple-targets
+npx create-target widget
 ```
 
 Next, create a directory for your widget, for example, `example/targets/widget`. Inside this directory, you'll need a few files to configure the widget.
